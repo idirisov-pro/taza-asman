@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Таза Асман — Операционный дашборд</title>
+<title>Таза Асман — Операционный план</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -165,6 +165,46 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13
 .footer strong{color:var(--text-muted);font-weight:500;}
 
 @media(max-width:640px){.summary-row{grid-template-columns:repeat(2,1fr);}.topbar{padding:0 14px;}.page{padding:14px 10px 40px;}}
+
+/* Personal projects */
+.personal-section { margin-top: 28px; border-top: 1px solid var(--border2); padding-top: 24px; }
+.personal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.personal-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
+.personal-subtitle { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+.personal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.pcard { background: var(--bg2); border: 1px solid var(--border2); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
+.pcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+.pcard-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; letter-spacing: -0.01em; }
+.pcard-goal { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+.pcard-next-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-dark); margin-bottom: 6px; }
+.pcard-next { font-size: 13px; color: var(--text); background: var(--accent-dim); border-radius: 7px; padding: 8px 12px; line-height: 1.5; margin-bottom: 12px; }
+.pcard-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.pmeta-item { font-size: 11px; background: var(--bg4); border-radius: 5px; padding: 3px 8px; color: var(--text-muted); }
+.pmeta-item span { color: var(--text); font-weight: 500; }
+.pcard-steps { list-style: none; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+.pcard-step { display: flex; align-items: flex-start; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.pcard-step:last-child { border-bottom: none; }
+.pcard-step-chk { width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--border2); background: var(--bg3); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-size: 10px; color: var(--accent); }
+.pcard-step-chk.done { background: var(--accent-dim); border-color: var(--accent-dark); }
+.pcard-step-text { flex: 1; color: var(--text); line-height: 1.5; }
+.pcard-step-text.done { text-decoration: line-through; color: var(--text-faint); }
+.pcard-step-del { background: none; border: none; color: var(--text-faint); cursor: pointer; font-size: 12px; padding: 0 2px; flex-shrink: 0; }
+.pcard-step-del:hover { color: var(--danger); }
+.pcard-add-row { display: flex; gap: 6px; margin-top: 8px; }
+.pcard-link { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--info); text-decoration: none; margin-top: 4px; }
+.pcard-link:hover { text-decoration: underline; }
+.pcard-time { font-size: 11px; color: var(--text-faint); margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+.pcard-time span { color: var(--accent); font-weight: 500; }
+.add-pcard-btn { padding: 7px 14px; border-radius: 8px; border: 1px dashed var(--border2); background: transparent; cursor: pointer; font-size: 12px; font-weight: 500; color: var(--text-faint); font-family: var(--sans); white-space: nowrap; transition: all .15s; }
+.add-pcard-btn:hover { color: var(--accent); border-color: var(--accent-dark); }
+.privacy-tag { font-size: 10px; background: var(--accent-dim); color: var(--accent-dark); padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+
+
+/* Public: hide finance */
+.side-card:has(.fin-totals) { display: none !important; }
+.personal-section { display: none !important; }
+#modal-pcard { display: none !important; }
+
 </style>
 </head>
 <body>
@@ -172,13 +212,13 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13
 <div class="topbar">
   <div class="logo">
     <div class="logo-mark">ТА</div>
-    <span class="logo-name">Таза Асман</span>
-    <span class="logo-sub">/ операционный дашборд</span>
+    
+    <span class="logo-name">Операционный дашборд</span>
   </div>
   <div class="topbar-right">
     <button class="daily-btn" onclick="openDailyModal()">📋 План на день</button>
     <span class="topbar-date" id="top-date"></span>
-    <span class="author-tag">Алмаз Идирисов · Исп. директор</span>
+    <span class="author-tag">Алмаз Идирисов · Алмаз Идирисов</span>
   </div>
 </div>
 
@@ -212,8 +252,55 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:13
   <!-- Sections container -->
   <div id="sections-container"></div>
 
-  <div class="footer">
-    <div><strong>Таза Асман</strong> · Бишкек, Кыргызстан · Алмаз Идирисов, Исполнительный директор</div>
+  
+  <!-- ═══ ЛИЧНЫЕ ПРОЕКТЫ (только для Алмаза) ═══ -->
+  <div class="personal-section" id="personal-section">
+    <div class="personal-header">
+      <div>
+        <div class="personal-title">Мои личные проекты</div>
+        <div class="personal-subtitle">Видно только вам · не публикуется</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="privacy-tag">🔒 Приватно</span>
+        <button class="add-pcard-btn" onclick="openAddPCard()">+ Проект</button>
+      </div>
+    </div>
+    <div class="personal-grid" id="personal-grid"></div>
+  </div>
+
+  <!-- Modal: Add personal project -->
+  <div class="modal-overlay" id="modal-pcard">
+    <div class="modal">
+      <h3>Новый личный проект</h3>
+      <div class="modal-field">
+        <div class="modal-label">Название</div>
+        <input type="text" id="pc-name" placeholder="Название проекта">
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Цель — зачем это мне?</div>
+        <textarea id="pc-goal" placeholder="Что я хочу получить от этого проекта"></textarea>
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Следующий шаг (один, самый важный)</div>
+        <input type="text" id="pc-next" placeholder="Конкретное действие">
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Ссылка (необязательно)</div>
+        <input type="text" id="pc-link" placeholder="https://...">
+      </div>
+      <div class="modal-field">
+        <div class="modal-label">Времени в неделю (часов)</div>
+        <input type="number" id="pc-hours" placeholder="Например: 3" min="0" max="40">
+      </div>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal('modal-pcard')">Отмена</button>
+        <button class="btn-ok" onclick="createPCard()">Создать</button>
+      </div>
+    </div>
+  </div>
+
+<div class="footer">
+    <div><strong>Алмаз Идирисов</strong> · Бишкек, Кыргызстан</div>
     <div id="footer-date" style="font-family:var(--mono);font-size:11px;"></div>
   </div>
 </div>
@@ -739,6 +826,253 @@ document.getElementById('top-date').textContent = dateStr;
 document.getElementById('footer-date').textContent = dateStr;
 
 renderAll();
+
+// ─── MARK STEP DONE + SORT ──────────────────────────────────────
+// Patch addStep to sort by priority then deadline after adding
+const _origAddStep = addStep;
+// Override: after adding, sort steps: urgent → mid → todo → done, then by deadline
+function sortSteps(dir) {
+  const priOrder = {urgent:0, mid:1, todo:2, done:3};
+  dir.steps.sort((a,b) => {
+    const pd = priOrder[a.priority] - priOrder[b.priority];
+    if(pd !== 0) return pd;
+    if(!a.deadline && !b.deadline) return 0;
+    if(!a.deadline) return 1;
+    if(!b.deadline) return -1;
+    return a.deadline.localeCompare(b.deadline);
+  });
+}
+
+// Patch addStep
+window.addStep = function(dirId) {
+  const d = state.dirs.find(x=>x.id===dirId);
+  const text = document.getElementById(dirId+'-step-text').value.trim();
+  const pri  = document.getElementById(dirId+'-step-pri').value;
+  const dl   = document.getElementById(dirId+'-step-dl').value.trim();
+  if(!text) return;
+  d.steps.push({id:Date.now(), text, priority:pri, deadline:dl});
+  document.getElementById(dirId+'-step-text').value='';
+  document.getElementById(dirId+'-step-dl').value='';
+  sortSteps(d);
+  saveState();
+  rerenderSection(dirId);
+};
+
+// Mark step done — toggle priority between original and done
+window.markDone = function(dirId, stepId) {
+  const d = state.dirs.find(x=>x.id===dirId);
+  const s = d.steps.find(x=>x.id===stepId);
+  if(!s) return;
+  if(s.priority === 'done') {
+    s.priority = s._prevPriority || 'todo';
+    delete s._prevPriority;
+  } else {
+    s._prevPriority = s.priority;
+    s.priority = 'done';
+  }
+  sortSteps(d);
+  saveState();
+  rerenderSection(dirId);
+};
+
+// Sort existing dirs on load
+state.dirs.forEach(d => sortSteps(d));
+
+// ─── PERSONAL PROJECTS ──────────────────────────────────────────
+const PKEY = 'ta_personal_v1';
+
+const DEFAULT_PERSONAL = [
+  {
+    id: 'linkedin',
+    name: 'LinkedIn — Kyrgyzstan Market Insider',
+    goal: 'Позиционирование как эксперта по выходу китайского бизнеса на рынок ЕАЭС и торговле Китай–Центральная Азия. Личный бренд = независимость от одного работодателя.',
+    next: 'Написать и опубликовать первый пост на тему "Как китайской компании зайти на рынок КР через ЕАЭС"',
+    link: 'https://www.linkedin.com/in/almaz-idirisov-bb85a84',
+    linkLabel: 'Открыть профиль LinkedIn',
+    hoursPerWeek: 3,
+    lastSession: '',
+    steps: [
+      {id:1, text:'Заполнить раздел About на английском — чётко сформулировать экспертизу', done:false},
+      {id:2, text:'Добавить текущие проекты (Таза Асман, импорт, медтуризм) в Experience', done:false},
+      {id:3, text:'Написать 1 пост в неделю — кейсы, инсайты по рынку КР/ЕАЭС/Китай', done:false},
+      {id:4, text:'Подключиться к 20 китайским бизнесменам и торговым ассоциациям в LinkedIn', done:false},
+      {id:5, text:'Написать статью о таможенных особенностях импорта через Торугарт', done:false},
+    ]
+  },
+  {
+    id: 'students',
+    name: 'Проектная команда из студентов',
+    goal: 'Создать команду молодых технологов и инженеров для коммерческого проектирования объектов. Доход с заказов + помощь выпускникам с опытом и трудоустройством.',
+    next: 'Составить список технических ВУЗов Бишкека и найти контакт куратора/декана профильных кафедр',
+    link: '',
+    linkLabel: '',
+    hoursPerWeek: 2,
+    lastSession: '',
+    steps: [
+      {id:1, text:'Определить 3 типа проектов под спрос: пищевое производство, общепит, жильё/коммерция', done:false},
+      {id:2, text:'Связаться с кафедрами КГТУ, АУЦА, КТУ "Манас" — найти заинтересованных студентов', done:false},
+      {id:3, text:'Разработать простой договор с заказчиком и схему распределения дохода с командой', done:false},
+      {id:4, text:'Найти первый тестовый заказ — через знакомых или LinkedIn', done:false},
+      {id:5, text:'Оформить портфолио команды после первого выполненного проекта', done:false},
+    ]
+  },
+  {
+    id: 'vibe',
+    name: 'Обучение вайбкодингу',
+    goal: 'Освоить создание приложений и инструментов с помощью ИИ без глубокого знания кода. Это даёт технологическую независимость и новые источники дохода.',
+    next: 'Выбрать первый конкретный инструмент для изучения (Cursor, Replit, Lovable) и пройти первый урок',
+    link: '',
+    linkLabel: '',
+    hoursPerWeek: 4,
+    lastSession: '',
+    steps: [
+      {id:1, text:'Выбрать платформу: Cursor / Replit / Lovable / v0 — сравнить и выбрать одну', done:false},
+      {id:2, text:'Пройти вводный курс выбранной платформы (обычно бесплатный)', done:false},
+      {id:3, text:'Создать первый реальный мини-проект — например упрощённую версию этого дашборда', done:false},
+      {id:4, text:'Применить навыки: автоматизировать одну рутинную задачу в своей работе', done:false},
+    ]
+  }
+];
+
+let pState = loadPState();
+
+function loadPState() {
+  try {
+    const s = localStorage.getItem(PKEY);
+    if(s) return JSON.parse(s);
+  } catch(e){}
+  return { projects: JSON.parse(JSON.stringify(DEFAULT_PERSONAL)) };
+}
+
+function savePState() { localStorage.setItem(PKEY, JSON.stringify(pState)); }
+
+function renderPersonal() {
+  const grid = document.getElementById('personal-grid');
+  if(!grid) return;
+  grid.innerHTML = pState.projects.map(p => buildPCard(p)).join('');
+}
+
+function buildPCard(p) {
+  const stepsHtml = p.steps.map(s => `
+    <li class="pcard-step">
+      <div class="pcard-step-chk ${s.done?'done':''}" onclick="togglePStep('${p.id}',${s.id})">${s.done?'✓':''}</div>
+      <span class="pcard-step-text ${s.done?'done':''}">${s.text}</span>
+      <button class="pcard-step-del" onclick="delPStep('${p.id}',${s.id})">×</button>
+    </li>`).join('');
+
+  const linkHtml = p.link ? `<a href="${p.link}" target="_blank" class="pcard-link">🔗 ${p.linkLabel||p.link}</a>` : '';
+  const done = p.steps.filter(s=>s.done).length;
+  const total = p.steps.length;
+  const pct = total>0 ? Math.round(done/total*100) : 0;
+  const today = new Date().toISOString().split('T')[0];
+
+  return `<div class="pcard" id="pc-${p.id}">
+    <div class="pcard-title">${p.name}</div>
+    <div class="pcard-goal">${p.goal}</div>
+    ${linkHtml}
+    <div style="margin-top:10px">
+      <div class="pcard-next-label">Следующий шаг</div>
+      <div class="pcard-next">${p.next}</div>
+    </div>
+    <div class="pcard-meta">
+      <div class="pmeta-item">Выполнено: <span>${done}/${total} (${pct}%)</span></div>
+      <div class="pmeta-item">В неделю: <span>${p.hoursPerWeek} ч</span></div>
+    </div>
+    <div style="background:var(--bg4);border-radius:4px;height:4px;margin-bottom:12px;">
+      <div style="background:var(--accent);height:4px;border-radius:4px;width:${pct}%;transition:width .3s;"></div>
+    </div>
+    <ul class="pcard-steps">${stepsHtml}</ul>
+    <div class="pcard-add-row">
+      <input class="fi" type="text" id="ps-${p.id}" placeholder="Добавить шаг...">
+      <button class="fbtn" onclick="addPStep('${p.id}')">+</button>
+    </div>
+    <div class="pcard-time">Последний сеанс: <span id="pls-${p.id}">${p.lastSession||'не указано'}</span>
+      &nbsp;<button class="fbtn" style="font-size:10px;padding:3px 8px;" onclick="markSession('${p.id}','${today}')">Отметить сегодня</button>
+    </div>
+  </div>`;
+}
+
+function togglePStep(pid, sid) {
+  const p = pState.projects.find(x=>x.id===pid);
+  const s = p.steps.find(x=>x.id===sid);
+  s.done = !s.done;
+  savePState();
+  renderPersonal();
+}
+
+function delPStep(pid, sid) {
+  const p = pState.projects.find(x=>x.id===pid);
+  p.steps = p.steps.filter(s=>s.id!==sid);
+  savePState();
+  renderPersonal();
+}
+
+function addPStep(pid) {
+  const inp = document.getElementById('ps-'+pid);
+  const text = inp.value.trim();
+  if(!text) return;
+  const p = pState.projects.find(x=>x.id===pid);
+  p.steps.push({id:Date.now(), text, done:false});
+  inp.value='';
+  savePState();
+  renderPersonal();
+}
+
+function markSession(pid, date) {
+  const p = pState.projects.find(x=>x.id===pid);
+  p.lastSession = date;
+  savePState();
+  const el = document.getElementById('pls-'+pid);
+  if(el) el.textContent = date;
+}
+
+function openAddPCard() { document.getElementById('modal-pcard').classList.add('open'); }
+
+function createPCard() {
+  const name  = document.getElementById('pc-name').value.trim();
+  const goal  = document.getElementById('pc-goal').value.trim();
+  const next  = document.getElementById('pc-next').value.trim();
+  const link  = document.getElementById('pc-link').value.trim();
+  const hours = parseFloat(document.getElementById('pc-hours').value)||0;
+  if(!name) return;
+  pState.projects.push({
+    id:'pc_'+Date.now(), name, goal:goal||'Цель не указана',
+    next:next||'Определить первый шаг', link, linkLabel:link,
+    hoursPerWeek:hours, lastSession:'', steps:[]
+  });
+  savePState();
+  closeModal('modal-pcard');
+  ['pc-name','pc-goal','pc-next','pc-link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pc-hours').value='';
+  renderPersonal();
+}
+
+renderPersonal();
+
+
+// ─── PATCH buildStep to add ✓ button ────────────────────────────
+const _origBuildStep = buildStep;
+window.buildStep = function(dirId, s) {
+  const priMap = {done:'sn-done',urgent:'sn-urgent',mid:'sn-mid',todo:'sn-todo'};
+  const tagMap = {done:'stag-done',urgent:'stag-urgent',mid:'stag-mid',todo:'stag-info'};
+  const tagLabel = {done:'Выполнено',urgent:'Срочно',mid:'В работе',todo:'Планово'};
+  const sym = {done:'✓',urgent:'!',mid:'~',todo:'·'};
+  const textClass = s.priority==='done' ? 'step-text done' : 'step-text';
+  const doneBtn = s.priority !== 'done'
+    ? `<button class="step-del" style="color:var(--accent-dark);font-size:11px;padding:2px 6px;border:1px solid var(--border2);border-radius:4px;" onclick="markDone('${dirId}',${s.id})" title="Отметить выполненным">✓</button>`
+    : `<button class="step-del" style="color:var(--text-faint);font-size:11px;" onclick="markDone('${dirId}',${s.id})" title="Снять отметку">↩</button>`;
+  const delBtn = `<button class="step-del" onclick="delStep('${dirId}',${s.id})" title="Удалить">×</button>`;
+  const dlSpan = s.deadline ? `<span class="exp-date">${s.deadline}</span>` : '';
+  return `<li class="step">
+    <span class="step-num ${priMap[s.priority]}">${sym[s.priority]}</span>
+    <div class="step-body">
+      <div class="${textClass}">${s.text}</div>
+      <div class="step-meta"><span class="stag ${tagMap[s.priority]}">${tagLabel[s.priority]}</span>${dlSpan}</div>
+    </div>
+    ${doneBtn}${delBtn}
+  </li>`;
+};
+
 </script>
 </body>
 </html>
